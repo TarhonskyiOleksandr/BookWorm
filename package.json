@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "BookWorm",
   "private": true,
   "scripts": {
     "build": "turbo run build",
