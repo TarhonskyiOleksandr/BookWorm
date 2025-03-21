@@ -1,0 +1,16 @@
+.header {
+  background: rgb(225, 224, 224);
+}
+
+.navigation {
+  display: flex;
+  gap: 12px;
+  margin-left: 3.375rem;
+  padding: 1rem 0;
+}
+
+.navigation li {
+  padding: 8px;
+  color: #232F92;
+  font-weight: 700;
+}

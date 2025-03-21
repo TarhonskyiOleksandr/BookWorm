@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Quantico } from "next/font/google";
 
 import "./globals.css";
+import Header from "@/layout/Header";
 
 
 const dmSans = DM_Sans({
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${quantico.variable}`}>
+        <Header />
         {children}
       </body>
     </html>
