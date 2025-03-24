@@ -4,7 +4,6 @@ import { DM_Sans, Quantico } from "next/font/google";
 import "./globals.css";
 import Header from "@/layout/Header";
 
-
 const dmSans = DM_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
