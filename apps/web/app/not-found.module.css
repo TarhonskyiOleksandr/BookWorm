@@ -1,0 +1,28 @@
+.notfound {
+  min-height: calc(100vh - 69px);
+  position: relative;
+  padding: 8rem;
+  background-image: url("/404_cat.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  font-family: DM Sans;
+  font-size: 96px;
+  font-weight: 700;
+  color: rgb(53, 62, 143);
+}
+
+.text {
+  color: rgb(53, 62, 143);
+  font-family: DM Sans;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 60px;
+}
