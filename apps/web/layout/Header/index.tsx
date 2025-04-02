@@ -27,6 +27,13 @@ const Header = () => {
             Community
           </li>
         </ul>
+        <ul>
+          <li>
+            <Link href="/register">
+              Register
+            </Link>
+          </li>
+        </ul>
       </nav>
     </div>
   );
