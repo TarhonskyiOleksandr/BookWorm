@@ -1,0 +1,8 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  gap: 8;
+  padding: 10px 20px 10px 20px;
+  background-color: #F5F5F5;
+  border: 1px solid #E2E2E2;
+}
