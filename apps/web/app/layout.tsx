@@ -17,7 +17,7 @@ const quantico = Quantico({
 });
 
 export const metadata: Metadata = {
-  title: "Book Warm",
+  title: "Book Worm",
   description: "",
 };
 
