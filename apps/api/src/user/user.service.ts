@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
 
@@ -22,17 +18,15 @@ export class UserService {
       .createQueryBuilder('user')
       .where(query);
 
-    if (options.password) queryBuilder.addSelect('user.password');
+    if (options?.password) queryBuilder.addSelect('user.password');
 
     const user = await queryBuilder.getOne();
-
-    if (!user) throw new NotFoundException('User not found');
 
     return user;
   }
 
   async createUser(data: CreateUserDto) {
-    const user = this.findUser({ email: data.email });
+    const user = await this.findUser({ email: data.email });
     if (user) throw new ConflictException('User already exists');
 
     const password = await argon2.hash(data.password);

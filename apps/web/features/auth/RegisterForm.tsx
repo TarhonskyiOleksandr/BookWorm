@@ -1,22 +1,34 @@
+'use client'
 import React from 'react';
+import { useFormState } from 'react-dom';
 
 import styles from "./register-form.module.css";
+import { SubmitButton } from '@/shared/ui';
+import { signUp } from './services/auth';
 
 export const RegisterForm = () => {
+  const [state, action] = useFormState(signUp, null);
+  console.log(state);
   return (
-    <form className={styles.register}>
+    <form
+      className={styles.register}
+      action={action}
+    >
       <label>
         Your email
       </label>
-      <input />
+      <input name="email" />
       <label>
         Your name
       </label>
-      <input />
+      <input name="name" />
       <label>
         Password
       </label>
-      <input type="password" />
+      <input
+        name="password"
+        type="password"
+      />
       <label>
         Confirm password
       </label>
@@ -25,9 +37,9 @@ export const RegisterForm = () => {
         <input type="checkbox" />
         <p>I agree to the Terms & Conditions and Privacy Policy</p>
       </div>
-      <button type="submit">
+      <SubmitButton>
         Create an account
-      </button>
+      </SubmitButton>
     </form>
   );
 }
