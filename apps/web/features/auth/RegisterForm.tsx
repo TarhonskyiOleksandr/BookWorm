@@ -1,14 +1,14 @@
 'use client'
 import React from 'react';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 
 import styles from "./register-form.module.css";
 import { SubmitButton } from '@/shared/ui';
-import { signUp } from './services/auth';
+import { signUp } from './services/auth.server';
 
 export const RegisterForm = () => {
-  const [state, action] = useFormState(signUp, null);
-  console.log(state);
+  const [state, action] = useActionState(signUp, null);
+  console.log(state)
   return (
     <form
       className={styles.register}
@@ -32,7 +32,10 @@ export const RegisterForm = () => {
       <label>
         Confirm password
       </label>
-      <input type="password" />
+      <input
+        type="password"
+        name="confirmPassword"
+      />
       <div>
         <input type="checkbox" />
         <p>I agree to the Terms & Conditions and Privacy Policy</p>
