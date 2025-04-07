@@ -35,7 +35,7 @@ export class UserService {
       password,
     };
 
-    this.userRepository.save(newUser);
+    await this.userRepository.save(newUser);
 
     return {
       message: 'New user created',

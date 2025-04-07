@@ -22,6 +22,12 @@ export const SignupFormSchema = z.object({
     .trim(),
   password: z
     .string()
-    .min(8, { message: 'Be at least 6 characters long' })
+    .min(6, { message: 'Be at least 6 characters long' })
     .trim(),
-});
+  confirmPassword: z
+    .string()
+}).refine((data) => data.password === data.confirmPassword, {
+  path: ['confirmPassword'],
+  message: 'Passwords don\'t match.',
+})
+
