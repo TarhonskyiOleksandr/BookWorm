@@ -14,27 +14,39 @@ export const RegisterForm = () => {
       className={styles.register}
       action={action}
     >
-      <label>
+      <label htmlFor="email">
         Your email
       </label>
-      <input name="email" />
-      <label>
+      <input
+        name="email"
+        defaultValue={state?.values?.email}
+        id="email"
+      />
+      <label htmlFor="name">
         Your name
       </label>
-      <input name="name" />
-      <label>
+      <input
+        name="name"
+        defaultValue={state?.values?.name}
+        id="name"
+      />
+      <label htmlFor="password">
         Password
       </label>
       <input
         name="password"
         type="password"
+        defaultValue={state?.values?.password}
+        id="password"
       />
-      <label>
+      <label htmlFor="confirmPassword">
         Confirm password
       </label>
       <input
         type="password"
         name="confirmPassword"
+        defaultValue={state?.values?.confirmPassword}
+        id="confirmPassword"
       />
       <div>
         <input type="checkbox" />

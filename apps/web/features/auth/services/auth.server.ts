@@ -12,6 +12,7 @@ export async function signUp(state: FormState, formData: FormData): Promise<Form
 
   if (!validatedFields.success) return {
     error: validatedFields.error.flatten().fieldErrors,
+    values: Object.fromEntries(formData),
   }
 
   const {confirmPassword, ...fields} = validatedFields.data;
