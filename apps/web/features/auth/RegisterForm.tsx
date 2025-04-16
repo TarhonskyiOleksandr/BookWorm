@@ -18,7 +18,7 @@ export const RegisterForm = () => {
         id="email"
       />
       {state?.error?.email && (
-        <p className={styles.error}>
+        <p className="error-text">
           {state.error.email.join(', ')}
         </p>
       )}
@@ -30,7 +30,7 @@ export const RegisterForm = () => {
         id="name"
       />
       {state?.error?.name && (
-        <p className={styles.error}>
+        <p className="error-text">
           {state.error.name.join(', ')}
         </p>
       )}
@@ -43,7 +43,7 @@ export const RegisterForm = () => {
         id="password"
       />
       {state?.error?.password && (
-        <p className={styles.error}>
+        <p className="error-text">
           {state.error.password.join(', ')}
         </p>
       )}
@@ -56,7 +56,7 @@ export const RegisterForm = () => {
         id="confirmPassword"
       />
       {state?.error?.confirmPassword && (
-        <p className={styles.error}>
+        <p className="error-text">
           {state.error.confirmPassword.join(', ')}
         </p>
       )}
@@ -67,7 +67,7 @@ export const RegisterForm = () => {
       </div>
 
       {state?.message && (
-        <p className={styles.error}>
+        <p className="error-text">
           {state.message}
         </p>
       )}
