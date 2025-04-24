@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -64,10 +66,6 @@ a {
 
 ul li, ol li {
   list-style: none;
-}
-
-.flex {
-  display: flex;
 }
 
 .items-center {
