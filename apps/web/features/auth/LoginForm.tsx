@@ -5,7 +5,7 @@ import { SubmitButton } from '@/shared/ui';
 
 export const LoginForm = () => {
   return (
-    <form>
+    <form className="flex flex-col">
       <label htmlFor="email">Your email</label>
       <input
         name="email"
