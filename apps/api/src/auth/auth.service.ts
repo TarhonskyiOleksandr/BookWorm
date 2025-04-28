@@ -1,11 +1,25 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { verify } from 'argon2';
+import { CookieOptions, Response } from 'express';
 
 import { UserService } from '../user/user.service';
+import { User } from 'src/user/entities/user.entity';
+import { JwtConfigService } from './jwt/jwt-config.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtConfigService: JwtConfigService,
+  ) {}
+
+  private getCookieOptions = (maxAgeMilliseconds?: number): CookieOptions => ({
+    ...(maxAgeMilliseconds ? { maxAge: maxAgeMilliseconds } : {}),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  });
 
   async verifyUser(email: string, password: string) {
     const user = await this.userService.findUser({ email }, { password: true });
@@ -20,6 +34,27 @@ export class AuthService {
       id: user.id,
       name: user.name,
       email: user.email,
+    };
+  }
+
+  async login(user: User, res: Response) {
+    const payload = { sub: user.id, email: user.email };
+
+    const accessToken = await this.jwtConfigService.generateAccessToken(payload);
+    const refreshToken = await this.jwtConfigService.generateRefreshToken(payload);
+
+    const accessExp = await this.jwtConfigService.getAccessTokenExpiration();
+    const refreshExp = await this.jwtConfigService.getRefreshTokenExpiration();
+
+    res.cookie('access_token', accessToken, this.getCookieOptions(accessExp));
+    res.cookie('refresh_token', refreshToken, this.getCookieOptions(refreshExp));
+
+    return {
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      message: 'Login successful',
     };
   }
 }
