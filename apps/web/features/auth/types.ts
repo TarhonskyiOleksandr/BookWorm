@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export type FormState = {
   error?: {
@@ -36,5 +36,14 @@ export const SignupFormSchema = z.object({
 }).refine((data) => data.password === data.confirmPassword, {
   path: ['confirmPassword'],
   message: 'Passwords don\'t match.',
-})
+});
 
+export const LoginFormSchema = z.object({
+  email: z
+    .string()
+    .email({ message: 'Invalid email.' })
+    .trim(),
+  password: z
+    .string()
+    .trim(),
+});

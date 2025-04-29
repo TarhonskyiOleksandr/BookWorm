@@ -1,6 +1,10 @@
 'use server'
 import { redirect } from 'next/navigation';
-import { FormState, SignupFormSchema } from '../types';
+import {
+  FormState,
+  SignupFormSchema,
+  LoginFormSchema,
+} from '../types';
 
 export async function signUp(state: FormState, formData: FormData): Promise<FormState> {
   const validatedFields = SignupFormSchema.safeParse({
@@ -27,6 +31,34 @@ export async function signUp(state: FormState, formData: FormData): Promise<Form
   const data = await res.json();
 
   if (!res.ok) return { message: data.message };
+
+  redirect('/sign-in');
+}
+
+export async function login(state: FormState, formData: FormData): Promise<FormState> {
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  })
+
+  if (!validatedFields.success) return {
+    error: validatedFields.error.flatten().fieldErrors,
+    values: Object.fromEntries(formData),
+  }
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(validatedFields.data),
+  });
+
+  if (!res.ok) {
+    const data = await res.json()
+    return { message: data.message }
+  }
 
   redirect('/');
 }
