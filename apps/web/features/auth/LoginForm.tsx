@@ -7,6 +7,7 @@ import {
   Label,
 } from '@/shared/ui';
 import { login } from './services/auth.server';
+import Link from 'next/link';
 
 export const LoginForm = () => {
   const [state, action] = useActionState(login, null);
@@ -50,6 +51,12 @@ export const LoginForm = () => {
       <SubmitButton>
         Login
       </SubmitButton>
+      <p className="text-sm text-center text-muted-foreground">
+        Don&#39;t have an account?{' '}
+        <Link href="/register" className="text-slate-700 underline underline-offset-4">
+          Sign up
+        </Link>
+      </p>
     </form>
   );
 };

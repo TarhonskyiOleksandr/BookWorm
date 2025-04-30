@@ -6,6 +6,7 @@ export type FormState = {
     email?: string[];
     password?: string[];
     confirmPassword?: string[];
+    agree?: string[];
   };
   message?: string;
   values?: {
@@ -13,6 +14,7 @@ export type FormState = {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    agree?: boolean;
   }
 } | null
 
@@ -32,7 +34,12 @@ export const SignupFormSchema = z.object({
     .min(6, { message: 'Be at least 6 characters long' })
     .trim(),
   confirmPassword: z
-    .string()
+    .string(),
+  agree: z
+    .boolean()
+    .refine(val => !!val, {
+      message: 'You must accept the terms.',
+    })
 }).refine((data) => data.password === data.confirmPassword, {
   path: ['confirmPassword'],
   message: 'Passwords don\'t match.',
@@ -45,5 +52,6 @@ export const LoginFormSchema = z.object({
     .trim(),
   password: z
     .string()
+    .min(1, { message: 'Password is required' })
     .trim(),
 });
