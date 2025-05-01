@@ -57,4 +57,11 @@ export class AuthService {
       message: 'Login successful',
     };
   }
+
+  async logout(res: Response) {
+    res.cookie('access_token', '', this.getCookieOptions(0));
+    res.cookie('refresh_token', '', this.getCookieOptions(0));
+
+    return { message: 'Logout successful' };
+  }
 }
