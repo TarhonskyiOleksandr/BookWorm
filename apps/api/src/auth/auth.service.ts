@@ -37,17 +37,26 @@ export class AuthService {
     };
   }
 
-  async login(user: User, res: Response) {
+  private async issueTokensAndSetCookies(user: User, res: Response) {
     const payload = { sub: user.id, email: user.email };
 
     const accessToken = await this.jwtConfigService.generateAccessToken(payload);
     const refreshToken = await this.jwtConfigService.generateRefreshToken(payload);
 
-    const accessExp = await this.jwtConfigService.getAccessTokenExpiration();
-    const refreshExp = await this.jwtConfigService.getRefreshTokenExpiration();
+    const accessExp = this.jwtConfigService.getAccessTokenExpiration();
+    const refreshExp = this.jwtConfigService.getRefreshTokenExpiration();
 
     res.cookie('access_token', accessToken, this.getCookieOptions(accessExp));
     res.cookie('refresh_token', refreshToken, this.getCookieOptions(refreshExp));
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async login(user: User, res: Response) {
+    await this.issueTokensAndSetCookies(user, res);
 
     return {
       user: {
@@ -56,5 +65,10 @@ export class AuthService {
       },
       message: 'Login successful',
     };
+  }
+
+  async refreshTokens(user: User, res: Response) {
+    await this.issueTokensAndSetCookies(user, res);
+    return { message: 'Tokens refreshed' };
   }
 }
