@@ -71,4 +71,11 @@ export class AuthService {
     await this.issueTokensAndSetCookies(user, res);
     return { message: 'Tokens refreshed' };
   }
+
+  async logout(res: Response) {
+    res.cookie('access_token', '', this.getCookieOptions(0));
+    res.cookie('refresh_token', '', this.getCookieOptions(0));
+
+    return { message: 'Logout successful' };
+  }
 }
