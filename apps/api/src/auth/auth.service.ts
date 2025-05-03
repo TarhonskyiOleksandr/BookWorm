@@ -78,4 +78,21 @@ export class AuthService {
 
     return { message: 'Logout successful' };
   }
+
+  async validateOrCreateGoogleUser(data: {
+    email: string;
+    googleId: string;
+    firstName?: string;
+    lastName?: string;
+  }): Promise<User> {
+    let user = await this.userService.findUser({ email: data.email });
+    // if (!user) {
+    //   user = await this.userService.createGoogleUser({
+    //     email: data.email,
+    //     googleId: data.googleId,
+    //     name: `${data.firstName} ${data.lastName}`,
+    //   });
+    // }
+    return user;
+  }
 }
