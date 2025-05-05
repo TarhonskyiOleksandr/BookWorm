@@ -1,5 +1,6 @@
 'use client'
-import React, { useActionState } from 'react';
+import React, { useActionState, useEffect } from 'react';
+import { toast } from 'sonner'
 
 import {
   SubmitButton,
@@ -11,6 +12,10 @@ import Link from 'next/link';
 
 export const LoginForm = () => {
   const [state, action] = useActionState(login, null);
+
+  useEffect(() => {
+    if (state?.message) toast.error(state.message);
+  }, [state?.message])
 
   return (
     <form
