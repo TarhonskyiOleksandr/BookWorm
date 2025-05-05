@@ -3,6 +3,7 @@ import { DM_Sans, Quantico } from "next/font/google";
 
 import "./globals.css";
 import Header from "@/layout/Header";
+import { Toaster } from "@/shared/ui";
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -31,6 +32,11 @@ export default function RootLayout({
       <body className={`${dmSans.variable} ${quantico.variable}`}>
         <Header />
         {children}
+        <Toaster
+          position="top-right"
+          theme="light"
+          richColors
+        />
       </body>
     </html>
   );
