@@ -59,7 +59,7 @@ export class AuthService {
     await this.issueTokensAndSetCookies(user, res);
 
     return {
-      user: {
+      data: {
         name: user.name,
         email: user.email,
       },
