@@ -31,7 +31,7 @@ export async function signUp(state: FormState, formData: FormData): Promise<Form
   });
   const data = await res.json();
 
-  if (!res.ok) return { message: data.message };
+  if (!res.ok) return data;
 
   redirect('/sign-in');
 }
@@ -58,7 +58,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 
   if (!res.ok) {
     const data = await res.json()
-    return { message: data.message }
+    return data
   }
 
   redirect('/');
