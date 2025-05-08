@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-export type FormState = {
+export type ApiResponse<T = unknown> = {
+  success?: boolean;
+  data?: T;
+  message?: string;
+};
+
+export type FormState = ApiResponse<unknown> & {
   error?: {
     name?: string[];
     email?: string[];
@@ -8,7 +14,6 @@ export type FormState = {
     confirmPassword?: string[];
     agree?: string[];
   };
-  message?: string;
   values?: {
     name?: string;
     email?: string;
