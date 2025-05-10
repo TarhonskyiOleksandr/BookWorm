@@ -13,12 +13,17 @@ export class ResponseInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((res) => {
         const { data, message, ...rest } = res ?? {};
+        const response: Record<string, unknown> = { success: true };
 
-        return {
-          success: true,
-          ...(message ? { message } : {}),
-          ...(typeof data ? { data } : Object.keys(rest).length ? { data: res } : {}),
-        };
+        if (message) response.message = message;
+
+        if (data) {
+          response.data = data;
+        } else if (Object.keys(rest).length) {
+          response.data = rest;
+        }
+
+        return response;
       }),
     );
   }
