@@ -47,7 +47,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     values: Object.fromEntries(formData),
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
     method: 'POST',
     credentials: 'include',
     headers: {
