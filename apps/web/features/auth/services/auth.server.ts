@@ -5,6 +5,7 @@ import {
   SignupFormSchema,
   LoginFormSchema,
 } from '../types';
+import { createSession } from '@/lib/session';
 
 export async function signUp(state: FormState, formData: FormData): Promise<FormState> {
   const validatedFields = SignupFormSchema.safeParse({
@@ -18,7 +19,7 @@ export async function signUp(state: FormState, formData: FormData): Promise<Form
   if (!validatedFields.success) return {
     error: validatedFields.error.flatten().fieldErrors,
     values: Object.fromEntries(formData),
-  }
+  };
 
   const {confirmPassword, agree, ...fields} = validatedFields.data;
 
@@ -40,7 +41,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
-  })
+  });
 
   if (!validatedFields.success) return {
     error: validatedFields.error.flatten().fieldErrors,
@@ -56,10 +57,12 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     body: JSON.stringify(validatedFields.data),
   });
 
-  if (!res.ok) {
-    const data = await res.json()
-    return data
-  }
+  const result = await res.json();
 
-  redirect('/');
+  if (res.ok) {
+    await createSession({ user: result.data });
+    redirect('/');
+  } else {
+    return result;
+  }
 }

@@ -15,7 +15,7 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (state?.message) toast.error(state.message);
-  }, [state?.message])
+  }, [state]);
 
   return (
     <form
