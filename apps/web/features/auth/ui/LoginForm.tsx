@@ -7,7 +7,7 @@ import {
   Input,
   Label,
 } from '@/shared/ui';
-import { login } from './services/auth.server';
+import { login } from '../services/auth.server';
 import Link from 'next/link';
 
 export const LoginForm = () => {

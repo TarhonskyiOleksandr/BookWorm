@@ -3,7 +3,7 @@ import React from 'react';
 import { useActionState } from 'react';
 
 import { Checkbox, Input, Label, SubmitButton } from '@/shared/ui';
-import { signUp } from './services/auth.server';
+import { signUp } from '../services/auth.server';
 import { cn } from '@/lib/utils';
 
 export const RegisterForm = () => {
