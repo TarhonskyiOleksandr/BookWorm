@@ -40,7 +40,7 @@ export async function decrypt(session: string) {
     return payload as Session;
   } catch(err) {
     console.error(err);
-    redirect('/sign-in');
+    return;
   }
 }
 
@@ -61,6 +61,9 @@ export async function getSession() {
 export async function verifySession() {
   const session = await getSession();
   if (!session?.user?.email) redirect('/sign-in');
+  return session;
 }
 
-export async function deleteSession() {}
+export async function deleteSession() {
+  (await cookies()).delete('session');
+}

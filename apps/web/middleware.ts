@@ -1,15 +1,12 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { getSession } from "./lib/session";
 
-const protectedRoutes = ['/dashboard', '/profile'];
+export default async function middleware(req: NextRequest) {
+  const session = await getSession();
+  if (!session?.user?.email)
+    return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
 
-export function middleware(request: NextRequest) {
-  const session = request.cookies.get('session')?.value;
-  const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route));
-
-  if (isProtectedRoute && !session) return NextResponse.redirect(new URL('/sign-in', request.url));
-
-  return NextResponse.next();
+  NextResponse.next();
 }
 
 export const config = {
