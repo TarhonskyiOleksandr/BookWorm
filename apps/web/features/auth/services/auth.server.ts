@@ -60,7 +60,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
   const result = await res.json();
 
   if (res.ok) {
-    await createSession({ user: result.data });
+    await createSession(result.data);
     redirect('/');
   } else {
     return result;

@@ -22,8 +22,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  login(@CurrentUser() user: User, @Res({ passthrough: true }) res: Response) {
-    return this.authService.login(user, res);
+  login(@CurrentUser() user: User) {
+    return this.authService.login(user);
   }
 
   @HttpCode(HttpStatus.OK)

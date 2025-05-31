@@ -52,10 +52,17 @@ export async function createSession(payload: Session) {
 }
 
 export async function getSession() {
-  const cookie = (await cookies()).get('session')?.value;
-  if (!cookie) return;
+  const cookie = (await cookies()).get("session")?.value;
+  if (!cookie) return null;
 
-  return await decrypt(cookie);
+  try {
+    const { payload } = await jwtVerify(cookie, secretKey, { algorithms: ["HS256"] });
+
+    return payload as Session;
+  } catch (err) {
+    console.error("Failed to verify the session", err);
+    // redirect('/sign-in');
+  }
 }
 
 export async function verifySession() {
