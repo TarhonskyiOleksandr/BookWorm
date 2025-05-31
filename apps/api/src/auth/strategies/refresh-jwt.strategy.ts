@@ -1,4 +1,4 @@
-import { createJwtStrategy } from './base-jwt.strategy';
+import { createJwtStrategy } from './base-jwt-cookies.strategy';
 
 export const RefreshJwtStrategy = createJwtStrategy({
   cookieName: 'refresh_token',

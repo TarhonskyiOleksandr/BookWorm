@@ -55,13 +55,29 @@ export class AuthService {
     };
   }
 
-  async login(user: User, res: Response) {
-    await this.issueTokensAndSetCookies(user, res);
+  private async generateTokens(user: User) {
+    const payload = { sub: user.id, email: user.email };
+
+    const accessToken = await this.jwtConfigService.generateAccessToken(payload);
+    const refreshToken = await this.jwtConfigService.generateRefreshToken(payload);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async login(user: User) {
+    // await this.issueTokensAndSetCookies(user, res); Unused since we use Berear-header approach
+    const { accessToken } = await this.generateTokens(user);
 
     return {
       data: {
-        name: user.name,
-        email: user.email,
+        user: {
+          name: user.name,
+          email: user.email,
+        },
+        accessToken
       },
       message: 'Login successful',
     };

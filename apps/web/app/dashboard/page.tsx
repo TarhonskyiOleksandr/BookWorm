@@ -1,6 +1,11 @@
+import { getSession } from '@/lib/session';
 import React from 'react';
 
-function Dashboard() {
+async function Dashboard() {
+  const session = await getSession();
+
+  console.log(session);
+
   return (
     <div>
       Dashboard
