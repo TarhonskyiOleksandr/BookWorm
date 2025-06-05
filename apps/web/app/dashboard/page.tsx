@@ -1,3 +1,4 @@
+import { PopularBooksList } from '@/features/books';
 import { getSession } from '@/lib/session';
 import React from 'react';
 
@@ -9,6 +10,7 @@ async function Dashboard() {
   return (
     <div>
       Dashboard
+      <PopularBooksList />
     </div>
   );
 }
