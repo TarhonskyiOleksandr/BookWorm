@@ -1,8 +1,10 @@
 import {
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -41,5 +43,13 @@ export class AuthController {
   @Post('/logout')
   logout(@Res({ passthrough: true }) res: Response) {
     return this.authService.logout(res);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/protected')
+  getAll(@Req() req) {
+    return {
+      messege: `Now you can access this protected API. this is your user ID: ${req.user.emai}`,
+    };
   }
 }

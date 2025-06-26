@@ -61,8 +61,47 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 
   if (res.ok) {
     await createSession(result.data);
-    redirect('/');
+    redirect('/dashboard');
   } else {
     return result;
   }
 }
+
+export const refreshToken = async (
+  oldRefreshToken: string
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/token-refresh`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refresh: oldRefreshToken,
+        }),
+      }
+    );
+
+    const { accessToken, refreshToken } = await response.json();
+
+    const updateRes = await fetch(
+      '/auth/update',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          accessToken,
+          refreshToken,
+        }),
+      }
+    );
+    if (!updateRes.ok)
+      throw new Error('Failed to update the tokens');
+
+    return accessToken;
+  } catch (err) {
+    console.error('Refresh Token failed', err);
+    return null;
+  }
+};
